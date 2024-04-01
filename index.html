@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>iphone GPS Tracker</title>
+    </head>
+    
+    <button id="downloadBtn">Download Array Data</button>
+
+  
+	<body>
+	    
+	</body>
+
+<script>
+
+
+var str = ""
+
+setInterval(
+    function getLocation() {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var currentTimeStamp = new Date().getTime();
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        var altitude = position.coords.altitude;
+        var speed = position.coords.speed;
+        console.log("Latitude: " + latitude + ", Longitude: " + longitude);
+
+        str += [currentTimeStamp, latitude, + longitude, altitude, speed, "\n"].join(", ");
+        console.log(str);
+
+    }, function(error) {
+        console.error("Error getting geolocation:", error);
+    });
+    }, 2000
+
+);
+
+document.getElementById('downloadBtn').addEventListener('click', function() {
+    var blob = new Blob([str], {type: "text/plain"});
+
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = 'array_data.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+})
+
+</script>
+</html>
