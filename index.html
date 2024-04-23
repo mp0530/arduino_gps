@@ -1,22 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="utf-8">
-        <title>iphone GPS Tracker</title>
-    </head>
-    
+<head>
+    <meta charset="utf-8">
+    <title>iphone GPS Tracker</title>
+
+    <style>
+        #downloadBtn {
+            width: 500px; 
+            height: 500px; 
+            font-size: 70px; 
+            border-radius: 8px;
+            background-color: #3498db; 
+            color: white; 
+            border: none;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+
+
+<body>
     <button id="downloadBtn">Download Array Data</button>
+</body>
 
-  
-	<body>
-	    
-	</body>
-
+    
 <script>
 
 
-var str = "";
+var str = ""
 
 setInterval(
     function getLocation() {
@@ -38,16 +52,22 @@ setInterval(
 
 );
 
+
 document.getElementById('downloadBtn').addEventListener('click', function() {
-    var blob = new Blob([str], {type: "text/plain"});
+    var blob = new Blob([str], {type: "text/csv;charset=utf-8;"});
 
     var a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = 'array_data.txt';
+
+    var today = new Date();
+    var dateString = (today.getMonth() + 1) +  + today.getDate();
+
+    a.download = dateString + '_iphone' + '.csv';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
 });
+
 
 </script>
 </html>
